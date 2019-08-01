@@ -7,7 +7,9 @@ class CartPage(BasePage):
        assert self.is_not_element_present(*BasketPageLocators.BASKET_CONTENT),"Cart is not clear"
 
     def clear_basket_message(self):
-        assert "Your basket is empty" in self.browser.find_element(*BasketPageLocators.BASKET_TEXT).text, "Text not 'is empty'"      
+        baskrt_message = self.browser.find_element(*BasketPageLocators.BASKET_TEXT).text
+        assert ("Your basket is empty" in baskrt_message) \
+               or ("Ваша корзина пуста" in baskrt_message), "Text not 'is empty'"      
 
 
 #    def should_be_login_form(self):

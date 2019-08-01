@@ -6,7 +6,7 @@ from selenium.common.exceptions import NoAlertPresentException # в начале
 import math
 import time
         
-class  PageObject(BasePage):
+class  ProductPage(BasePage):
 
     def add_to_basket(self):
        button = self.browser.find_element(*ProductPageLocators.ADD_TO_BASCKET)
@@ -18,7 +18,6 @@ class  PageObject(BasePage):
         answer = str(math.log(abs((12 * math.sin(float(x))))))
         alert.send_keys(answer)
         alert.accept()
-        time.sleep(5)
         try:
             alert = self.browser.switch_to.alert
             print("Your code: {}".format(alert.text))
@@ -36,3 +35,10 @@ class  PageObject(BasePage):
         book_price = self.browser.find_element(*ProductPageLocators.PRICE).text
         cart_size = self.browser.find_element(*ProductPageLocators.ALERT_CART_STATUS).text.split()[-1]
         assert template.format(book_price) == template.format(cart_size), 'цена {} не равна {}'.format(book_price, cart_size)
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+           "Success message is presented, but should not be"
+    def should_is_disappeared(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), \
+           "Success message is not disappeared"
